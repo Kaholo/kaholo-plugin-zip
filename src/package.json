@@ -1,0 +1,17 @@
+{
+  "name": "zip-plugin",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "archiver": "3.0.0",
+    "path": "0.12.7",
+    "node-stream-zip": "1.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
