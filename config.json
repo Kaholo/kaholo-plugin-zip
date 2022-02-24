@@ -1,0 +1,74 @@
+{
+  "name": "Zip",
+  "type": "executer",
+  "execProgram": "node",
+  "main": "app.js",
+  "imgUrl": "logo.png",
+  "version": "1.1.0",
+  "description": "Zip plugin",
+  "methods": [
+    {
+      "name": "zip",
+      "viewName": "Zip files/folders",
+      "params": [
+        {
+          "name": "ARCHIVEPATH",
+          "viewName": "Path to archive",
+          "type": "string"
+        },
+        {
+          "name": "TARGETS",
+          "viewName": "Path to files/folders",
+          "type": "string"
+        },
+        {
+          "name": "DESTPATH",
+          "viewName": "Path to folders in archive",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "zipDir",
+      "viewName": "Zip Directory content",
+      "params": [
+        {
+          "name": "zipPath",
+          "viewName": "Path to archive",
+          "type": "string"
+        },
+        {
+          "name": "dirPath",
+          "viewName": "Path to directory",
+          "type": "string"
+        },
+        {
+          "name": "ignore",
+          "viewName": "Path to folders in archive",
+          "description": "Paths to ignore inside the directory. One per line",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "unzip",
+      "viewName": "Unzip archive",
+      "params": [
+        {
+          "name": "ARCHIVE",
+          "viewName": "Path to archive",
+          "type": "string"
+        },
+        {
+          "name": "DESTPATH",
+          "viewName": "Path for extraction",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "category": [
+    "FILES",
+    "CORE"
+  ]
+}
