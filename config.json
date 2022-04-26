@@ -4,65 +4,96 @@
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Zip plugin",
   "methods": [
     {
       "name": "zip",
-      "viewName": "Zip files/folders",
+      "viewName": "Zip Files and/or Directories",
       "params": [
         {
           "name": "ARCHIVEPATH",
-          "viewName": "Path to archive",
-          "type": "string"
+          "viewName": "Path to zip archive",
+          "description": "Path and filename for the zip file",
+          "type": "string",
+          "required": true,
+          "placeholder": "/home/username/files.zip",
+          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         },
         {
           "name": "TARGETS",
-          "viewName": "Path to files/folders",
-          "type": "string"
+          "viewName": "Paths to zip",
+          "description": "Paths of files and directories to include (space separated)",
+          "type": "string",
+          "required": true,
+          "placeholder": "/home/username/file1.log /home/username/datadir",
+          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         },
         {
           "name": "DESTPATH",
-          "viewName": "Path to folders in archive",
-          "type": "string"
+          "viewName": "unused parameter",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "placeholder": "",
+          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         }
       ]
     },
     {
       "name": "zipDir",
-      "viewName": "Zip Directory content",
+      "viewName": "Zip One Directory",
       "params": [
         {
           "name": "zipPath",
-          "viewName": "Path to archive",
-          "type": "string"
+          "viewName": "Path to zip archive",
+          "description": "Path and filename for the zip file",
+          "type": "string",
+          "required": true,
+          "placeholder": "/home/username/files.zip",
+          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         },
         {
           "name": "dirPath",
-          "viewName": "Path to directory",
-          "type": "string"
+          "viewName": "Path to directory to zip",
+          "description": "Path to directory to be included",
+          "type": "string",
+          "required": true,
+          "placeholder": "/home/username/datadir",
+          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         },
         {
           "name": "ignore",
-          "viewName": "Path to folders in archive",
-          "description": "Paths to ignore inside the directory. One per line",
-          "type": "text"
+          "viewName": "Paths to ignore",
+          "description": "Paths/filenames to ignore inside the directory. One per line",
+          "type": "text",
+          "required": false,
+          "placeholder": "/home/username/datadir/temp /home/username/datadir/.config",
+          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         }
       ]
     },
     {
       "name": "unzip",
-      "viewName": "Unzip archive",
+      "viewName": "Extract Zip Archive",
       "params": [
         {
           "name": "ARCHIVE",
-          "viewName": "Path to archive",
-          "type": "string"
-        },
+          "viewName": "Path to zip archive",
+          "description": "Path and filename for the zip file",
+          "type": "string",
+          "required": true,
+          "placeholder": "/home/username/files.zip",
+          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
+       },
         {
           "name": "DESTPATH",
-          "viewName": "Path for extraction",
-          "type": "string"
+          "viewName": "Extraction Path",
+          "description": "Path to directory into which the zip file will be extracted",
+          "type": "string",
+          "required": true,
+          "placeholder": "/home/username/unzipped",
+          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         }
       ]
     }
