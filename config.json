@@ -1,5 +1,6 @@
 {
   "name": "Zip",
+  "viewName": "Zip",
   "type": "executer",
   "execProgram": "node",
   "main": "app.js",
@@ -85,7 +86,7 @@
           "required": true,
           "placeholder": "/home/username/files.zip",
           "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
-       },
+        },
         {
           "name": "DESTPATH",
           "viewName": "Extraction Path",
@@ -94,6 +95,12 @@
           "required": true,
           "placeholder": "/home/username/unzipped",
           "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
+        },
+        {
+          "name": "clearExtractionPath",
+          "viewName": "Clear Extraction Path",
+          "description": "Recursively removes the extraction path and all files and directories within before extracting the zip archive.",
+          "type": "boolean"
         }
       ]
     }
