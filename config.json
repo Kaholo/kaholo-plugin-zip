@@ -28,15 +28,6 @@
           "required": true,
           "placeholder": "/home/username/file1.log /home/username/datadir",
           "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
-        },
-        {
-          "name": "DESTPATH",
-          "viewName": "unused parameter",
-          "description": "",
-          "type": "string",
-          "required": false,
-          "placeholder": "",
-          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         }
       ]
     },
