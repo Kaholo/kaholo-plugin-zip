@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const StreamZip = require("node-stream-zip");
 const Archiver = require("./archiver");
 const { pathExists } = require("./helpers");
@@ -6,6 +7,11 @@ const { pathExists } = require("./helpers");
 async function zip(action) {
   const pathToArchive = action.params.ARCHIVEPATH;
   const pathToTargets = action.params.TARGETS;
+
+  const directoryPath = path.dirname(pathToArchive);
+  if (!await pathExists(directoryPath)) {
+    throw new Error(`Path ${directoryPath} does not exist!`);
+  }
 
   const archiver = new Archiver(pathToArchive);
 

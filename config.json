@@ -5,7 +5,7 @@
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Zip plugin",
   "methods": [
     {
@@ -25,7 +25,7 @@
           "name": "TARGETS",
           "viewName": "Paths to zip",
           "description": "Paths of files and directories to include, one per line.",
-          "type": "string",
+          "type": "text",
           "required": true,
           "placeholder": "/home/username/file1.log /home/username/datadir",
           "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
