@@ -23,7 +23,7 @@
         {
           "name": "TARGETS",
           "viewName": "Paths to zip",
-          "description": "Paths of files and directories to include (space separated)",
+          "description": "Paths of files and directories to include, one per line.",
           "type": "string",
           "required": true,
           "placeholder": "/home/username/file1.log /home/username/datadir",

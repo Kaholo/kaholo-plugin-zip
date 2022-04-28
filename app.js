@@ -8,7 +8,7 @@ async function zip(action) {
 
   const archiver = new Archiver(pathToArchive);
 
-  const targetsArray = pathToTargets.split(" ");
+  const targetsArray = pathToTargets.split("\n");
   for (let i = 0; i < targetsArray.length; i += 1) {
     archiver.add(targetsArray[i]);
   }
