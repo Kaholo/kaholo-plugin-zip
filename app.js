@@ -1,6 +1,7 @@
 const fs = require("fs");
 const StreamZip = require("node-stream-zip");
 const Archiver = require("./archiver");
+const { pathExists } = require("./helpers");
 
 async function zip(action) {
   const pathToArchive = action.params.ARCHIVEPATH;
@@ -26,14 +27,19 @@ async function zipDir(action) {
   return archiver.finalize();
 }
 
-function unzip(action) {
+async function unzip(action) {
+  const pathToArchive = action.params.ARCHIVE;
+  const pathToUnZip = action.params.DESTPATH;
+  if (action.params.clearExtractionPath) {
+    if (await pathExists(pathToUnZip)) {
+      await fs.promises.rm(pathToUnZip, { recursive: true });
+    }
+  }
+  const streamZip = new StreamZip({
+    file: pathToArchive,
+    storeEntries: true,
+  });
   return new Promise((resolve, reject) => {
-    const pathToArchive = action.params.ARCHIVE;
-    const pathToUnZip = action.params.DESTPATH;
-    const streamZip = new StreamZip({
-      file: pathToArchive,
-      storeEntries: true,
-    });
     streamZip.on("ready", () => {
       fs.mkdirSync(pathToUnZip);
       streamZip.extract(null, pathToUnZip, (err, count) => {
