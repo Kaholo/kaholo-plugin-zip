@@ -5,17 +5,17 @@
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "description": "Zip plugin",
   "methods": [
     {
       "name": "zip",
-      "viewName": "Zip Files and/or Directories",
+      "viewName": "Create Zip Archive",
       "params": [
         {
           "name": "ARCHIVEPATH",
           "viewName": "Path to zip archive",
-          "description": "Path and filename for the zip file",
+          "description": "Path for the zip file",
           "type": "string",
           "required": true,
           "placeholder": "/home/username/files.zip",
@@ -26,42 +26,26 @@
           "viewName": "Paths to zip",
           "description": "Paths of files and directories to include, one per line.",
           "type": "text",
+          "parserType": "array",
           "required": true,
-          "placeholder": "/home/username/file1.log /home/username/datadir",
-          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
-        }
-      ]
-    },
-    {
-      "name": "zipDir",
-      "viewName": "Zip One Directory",
-      "params": [
-        {
-          "name": "zipPath",
-          "viewName": "Path to zip archive",
-          "description": "Path and filename for the zip file",
-          "type": "string",
-          "required": true,
-          "placeholder": "/home/username/files.zip",
+          "placeholder": "/home/username/file1.log\n/home/username/datadir",
           "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         },
         {
-          "name": "dirPath",
-          "viewName": "Path to directory to zip",
-          "description": "Path to directory to be included",
-          "type": "string",
-          "required": true,
-          "placeholder": "/home/username/datadir",
-          "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
-        },
-        {
-          "name": "ignore",
+          "name": "ignoredPaths",
           "viewName": "Paths to ignore",
-          "description": "Paths/filenames to ignore inside the directory. One per line",
+          "description": "Paths/filenames to ignore, one per line",
           "type": "text",
-          "required": false,
-          "placeholder": "/home/username/datadir/temp /home/username/datadir/.config",
+          "parserType": "array",
+          "placeholder": "/home/username/datadir/temp\n/home/username/datadir/.config",
           "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
+        },
+        {
+          "name": "overwrite",
+          "viewName": "Overwrite Existing Zip Archive",
+          "description": "Overwrite any file present at the given path to zip archive.",
+          "type": "boolean",
+          "default": true
         }
       ]
     },
