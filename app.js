@@ -1,7 +1,12 @@
 const fs = require("fs/promises");
 const path = require("path");
 const { bootstrap } = require("kaholo-plugin-library");
-const { pathExists, createZipArchive, unzipArchive } = require("./helpers");
+const {
+  pathExists,
+  createZipArchive,
+  unzipArchive,
+  validatePaths,
+} = require("./helpers");
 
 async function zip({
   ARCHIVEPATH: archivePath,
@@ -12,6 +17,7 @@ async function zip({
   const absoluteArchivePath = path.resolve(archivePath);
   const absoluteTargetPaths = targetPaths.map((targetPath) => path.resolve(targetPath));
   const absoluteIgnoredPaths = ignoredPaths.map((ignorePath) => path.resolve(ignorePath));
+  await validatePaths(absoluteArchivePath, ...absoluteTargetPaths, ...absoluteIgnoredPaths);
 
   if (overwrite && await pathExists(absoluteArchivePath)) {
     await fs.rm(absoluteArchivePath, { recursive: true });
@@ -31,6 +37,7 @@ async function unzip({
 }) {
   const absoluteArchivePath = path.resolve(archivePath);
   const absoluteDestinationPath = path.resolve(destinationPath);
+  await validatePaths(absoluteArchivePath, absoluteDestinationPath);
 
   if (clearExtractionPath && await pathExists(absoluteDestinationPath)) {
     await fs.rm(absoluteDestinationPath, { recursive: true });

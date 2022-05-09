@@ -21,6 +21,16 @@ async function pathExists(path) {
   }
 }
 
+async function validatePaths(...paths) {
+  return Promise.all(
+    paths.map(async (path) => {
+      if (!await pathExists(path)) {
+        throw new Error(`Path ${path} does not exist!`);
+      }
+    }),
+  );
+}
+
 async function unzipArchive({ archivePath, destinationPath }) {
   const streamZipInstance = new AsyncStreamZip({ file: archivePath });
 
@@ -73,10 +83,10 @@ async function resolveIgnoredPaths(rootPath, paths) {
     .filter((path) => !path.startsWith(".."));
 
   // If the ignored path is a directory, additionally
-  // add the path with the appended asteriks
+  // add the path which matches all files and subdirectories
   const resolvedPathPromises = filteredRelativePaths.map(async (path) => {
     const pathStat = await lstat(resolvePath(rootPath, path));
-    return pathStat.isDirectory() ? [`${path}/*`, path] : path;
+    return pathStat.isDirectory() ? [`${path}/${MATCH_ALL_PATH}`, path] : path;
   });
 
   const resolvedPaths = await Promise.all(resolvedPathPromises);
@@ -85,6 +95,7 @@ async function resolveIgnoredPaths(rootPath, paths) {
 
 module.exports = {
   pathExists,
+  validatePaths,
   createZipArchive,
   unzipArchive,
 };
