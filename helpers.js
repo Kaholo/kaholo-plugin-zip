@@ -42,8 +42,9 @@ async function createZipArchive({ archivePath, ignoredPaths, targetPaths }) {
   await Promise.all(addPathPromises);
 
   await archiver.finalize();
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     outputStream.on("finish", resolve);
+    outputStream.on("error", reject);
   });
 }
 
