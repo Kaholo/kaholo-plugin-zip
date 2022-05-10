@@ -17,10 +17,13 @@ async function zip({
   const absoluteArchivePath = path.resolve(archivePath);
   const absoluteTargetPaths = targetPaths.map((targetPath) => path.resolve(targetPath));
   const absoluteIgnoredPaths = ignoredPaths.map((ignorePath) => path.resolve(ignorePath));
-  await validatePaths(...absoluteTargetPaths, ...absoluteIgnoredPaths);
+  await validatePaths(...absoluteTargetPaths);
 
-  if (overwrite && await pathExists(absoluteArchivePath)) {
+  const archivePathExists = await pathExists(absoluteArchivePath);
+  if (overwrite && archivePathExists) {
     await fs.rm(absoluteArchivePath, { recursive: true });
+  } else if (!overwrite && archivePathExists) {
+    throw new Error(`Path ${archivePath} is already occupied. If you want to overwrite it, check the Overwrite parameter.`);
   }
 
   return createZipArchive({
@@ -39,8 +42,11 @@ async function unzip({
   const absoluteDestinationPath = path.resolve(destinationPath);
   await validatePaths(absoluteArchivePath);
 
-  if (clearExtractionPath && await pathExists(absoluteDestinationPath)) {
+  const destinationPathExists = await pathExists(absoluteDestinationPath);
+  if (clearExtractionPath && destinationPathExists) {
     await fs.rm(absoluteDestinationPath, { recursive: true });
+  } else if (!clearExtractionPath && destinationPathExists) {
+    throw new Error(`Path ${destinationPath} is already occupied. If you want to overwrite it, check the Clear Extraction Path parameter.`);
   }
 
   return unzipArchive({
