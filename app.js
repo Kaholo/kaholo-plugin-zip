@@ -16,7 +16,7 @@ async function zip({
 }) {
   const absoluteArchivePath = path.resolve(archivePath);
   const absoluteTargetPaths = targetPaths.map((targetPath) => path.resolve(targetPath));
-  const absoluteIgnoredPaths = ignoredPaths.map((ignorePath) => path.resolve(ignorePath));
+  const absoluteIgnoredPaths = (ignoredPaths || []).map((ignorePath) => path.resolve(ignorePath));
   await validatePaths(...absoluteTargetPaths);
 
   const archivePathExists = await pathExists(absoluteArchivePath);
