@@ -85,6 +85,9 @@ async function resolveIgnoredPaths(rootPath, paths) {
   // If the ignored path is a directory, additionally
   // add the path which matches all files and subdirectories
   const resolvedPathPromises = filteredRelativePaths.map(async (path) => {
+    if (!await pathExists(path)) {
+      return [];
+    }
     const pathStat = await lstat(resolvePath(rootPath, path));
     return pathStat.isDirectory() ? [`${path}/${MATCH_ALL_PATH}`, path] : path;
   });
