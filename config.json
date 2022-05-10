@@ -5,7 +5,7 @@
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Zip plugin",
   "methods": [
     {

@@ -46,7 +46,7 @@ async function unzip({
   if (clearExtractionPath && destinationPathExists) {
     await fs.rm(absoluteDestinationPath, { recursive: true });
   } else if (!clearExtractionPath && destinationPathExists) {
-    throw new Error(`Path ${destinationPath} already exists. If you want to overwrite it, check the "Clear Extraction Path" parameter.`);
+    throw new Error(`Path ${destinationPath} exists. Please select the "Clear Extraction Path" parameter to overwrite.`);
   }
 
   return unzipArchive({
