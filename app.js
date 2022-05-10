@@ -17,7 +17,7 @@ async function zip({
   const absoluteArchivePath = path.resolve(archivePath);
   const absoluteTargetPaths = targetPaths.map((targetPath) => path.resolve(targetPath));
   const absoluteIgnoredPaths = ignoredPaths.map((ignorePath) => path.resolve(ignorePath));
-  await validatePaths(absoluteArchivePath, ...absoluteTargetPaths, ...absoluteIgnoredPaths);
+  await validatePaths(...absoluteTargetPaths, ...absoluteIgnoredPaths);
 
   if (overwrite && await pathExists(absoluteArchivePath)) {
     await fs.rm(absoluteArchivePath, { recursive: true });
@@ -37,7 +37,7 @@ async function unzip({
 }) {
   const absoluteArchivePath = path.resolve(archivePath);
   const absoluteDestinationPath = path.resolve(destinationPath);
-  await validatePaths(absoluteArchivePath, absoluteDestinationPath);
+  await validatePaths(absoluteArchivePath);
 
   if (clearExtractionPath && await pathExists(absoluteDestinationPath)) {
     await fs.rm(absoluteDestinationPath, { recursive: true });
