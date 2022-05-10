@@ -23,7 +23,7 @@ async function zip({
   if (overwrite && archivePathExists) {
     await fs.rm(absoluteArchivePath, { recursive: true });
   } else if (!overwrite && archivePathExists) {
-    throw new Error(`Path ${archivePath} is already occupied. If you want to overwrite it, check the Overwrite parameter.`);
+    throw new Error(`File ${archivePath} already exists. Please select the "Overwrite Existing Zip Archive" parameter to overwrite.`);
   }
 
   return createZipArchive({
@@ -46,7 +46,7 @@ async function unzip({
   if (clearExtractionPath && destinationPathExists) {
     await fs.rm(absoluteDestinationPath, { recursive: true });
   } else if (!clearExtractionPath && destinationPathExists) {
-    throw new Error(`Path ${destinationPath} is already occupied. If you want to overwrite it, check the Clear Extraction Path parameter.`);
+    throw new Error(`Path ${destinationPath} already exists. If you want to overwrite it, check the "Clear Extraction Path" parameter.`);
   }
 
   return unzipArchive({
