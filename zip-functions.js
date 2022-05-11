@@ -5,9 +5,8 @@ const {
   resolve: resolvePath,
 } = require("path");
 const Archiver = require("archiver");
+const { lstat, access, mkdir } = require("fs/promises");
 const fs = require("fs");
-
-const { lstat, access, mkdir } = fs.promises;
 
 const ARCHIVER_ZIP_FORMAT = "zip";
 const MATCH_ALL_PATH = "**/*";
