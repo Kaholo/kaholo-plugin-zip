@@ -1,66 +1,65 @@
-const fs = require("fs");
+const fs = require("fs/promises");
 const path = require("path");
-const StreamZip = require("node-stream-zip");
-const Archiver = require("./archiver");
-const { pathExists } = require("./helpers");
+const { bootstrap } = require("kaholo-plugin-library");
+const {
+  pathExists,
+  createZipArchive,
+  unzipArchive,
+  validatePaths,
+} = require("./zip-functions");
 
-async function zip(action) {
-  const pathToArchive = action.params.ARCHIVEPATH;
-  const pathToTargets = action.params.TARGETS;
+async function zip({
+  ARCHIVEPATH: archivePath,
+  TARGETS: targetPaths,
+  ignoredPaths,
+  overwrite,
+}) {
+  const absoluteArchivePath = path.resolve(archivePath);
+  const absoluteTargetPaths = targetPaths.map((targetPath) => path.resolve(targetPath));
+  const absoluteIgnoredPaths = (ignoredPaths || []).map((ignorePath) => path.resolve(ignorePath));
+  await validatePaths(...absoluteTargetPaths, path.dirname(absoluteArchivePath));
 
-  const directoryPath = path.dirname(pathToArchive);
-  if (!await pathExists(directoryPath)) {
-    throw new Error(`Path ${directoryPath} does not exist!`);
+  const archivePathExists = await pathExists(absoluteArchivePath);
+  if (!overwrite && archivePathExists) {
+    throw new Error(`File ${archivePath} already exists. Please select the "Overwrite Existing Zip Archive" parameter to overwrite.`);
   }
 
-  const archiver = new Archiver(pathToArchive);
-
-  const targetsArray = pathToTargets.split("\n");
-  for (let i = 0; i < targetsArray.length; i += 1) {
-    archiver.add(targetsArray[i]);
+  if (archivePathExists) {
+    await fs.rm(absoluteArchivePath, { recursive: true });
   }
 
-  return archiver.finalize();
-}
-
-async function zipDir(action) {
-  const pathToArchive = action.params.zipPath;
-  const pathToDir = action.params.dirPath;
-  const ignore = (action.params.ignore || "").split("\n");
-
-  const archiver = new Archiver(pathToArchive);
-  archiver.addGlob("**/*", { cwd: pathToDir, ignore });
-  return archiver.finalize();
-}
-
-async function unzip(action) {
-  const pathToArchive = action.params.ARCHIVE;
-  const pathToUnZip = action.params.DESTPATH;
-  if (action.params.clearExtractionPath) {
-    if (await pathExists(pathToUnZip)) {
-      await fs.promises.rm(pathToUnZip, { recursive: true });
-    }
-  }
-  const streamZip = new StreamZip({
-    file: pathToArchive,
-    storeEntries: true,
-  });
-  return new Promise((resolve, reject) => {
-    streamZip.on("ready", () => {
-      fs.mkdirSync(pathToUnZip);
-      streamZip.extract(null, pathToUnZip, (err, count) => {
-        if (err) {
-          return reject(err);
-        }
-        streamZip.close();
-        return resolve(`${count} files restored`);
-      });
-    });
+  return createZipArchive({
+    archivePath: absoluteArchivePath,
+    targetPaths: absoluteTargetPaths,
+    ignoredPaths: absoluteIgnoredPaths,
   });
 }
 
-module.exports = {
+async function unzip({
+  ARCHIVE: archivePath,
+  DESTPATH: destinationPath,
+  clearExtractionPath,
+}) {
+  const absoluteArchivePath = path.resolve(archivePath);
+  const absoluteDestinationPath = path.resolve(destinationPath);
+  await validatePaths(absoluteArchivePath);
+
+  const destinationPathExists = await pathExists(absoluteDestinationPath);
+  if (!clearExtractionPath && destinationPathExists) {
+    throw new Error(`Path ${destinationPath} exists. Please select the "Clear Extraction Path" parameter to overwrite.`);
+  }
+
+  if (destinationPathExists) {
+    await fs.rm(absoluteDestinationPath, { recursive: true });
+  }
+
+  return unzipArchive({
+    archivePath: absoluteArchivePath,
+    destinationPath: absoluteDestinationPath,
+  });
+}
+
+module.exports = bootstrap({
   zip,
-  zipDir,
   unzip,
-};
+});
