@@ -6,7 +6,7 @@ const {
   createZipArchive,
   unzipArchive,
   validatePaths,
-} = require("./helpers");
+} = require("./zip-functions");
 
 async function zip({
   ARCHIVEPATH: archivePath,
@@ -20,10 +20,12 @@ async function zip({
   await validatePaths(...absoluteTargetPaths, path.dirname(absoluteArchivePath));
 
   const archivePathExists = await pathExists(absoluteArchivePath);
-  if (overwrite && archivePathExists) {
-    await fs.rm(absoluteArchivePath, { recursive: true });
-  } else if (!overwrite && archivePathExists) {
+  if (!overwrite && archivePathExists) {
     throw new Error(`File ${archivePath} already exists. Please select the "Overwrite Existing Zip Archive" parameter to overwrite.`);
+  }
+
+  if (archivePathExists) {
+    await fs.rm(absoluteArchivePath, { recursive: true });
   }
 
   return createZipArchive({
@@ -43,10 +45,12 @@ async function unzip({
   await validatePaths(absoluteArchivePath);
 
   const destinationPathExists = await pathExists(absoluteDestinationPath);
-  if (clearExtractionPath && destinationPathExists) {
-    await fs.rm(absoluteDestinationPath, { recursive: true });
-  } else if (!clearExtractionPath && destinationPathExists) {
+  if (!clearExtractionPath && destinationPathExists) {
     throw new Error(`Path ${destinationPath} exists. Please select the "Clear Extraction Path" parameter to overwrite.`);
+  }
+
+  if (destinationPathExists) {
+    await fs.rm(absoluteDestinationPath, { recursive: true });
   }
 
   return unzipArchive({
