@@ -7,6 +7,9 @@
   "imgUrl": "logo.png",
   "version": "2.0.1",
   "description": "Creates and Extracts Zip Archives",
+  "category": [
+    "Basic Tools"
+  ],
   "keywords": [
     "zip",
     "unzip",
@@ -77,7 +80,7 @@
           "viewName": "Extraction Path",
           "description": "Path to directory into which the zip file will be extracted",
           "type": "string",
-          "required": true,
+          "required": false,
           "placeholder": "/home/username/unzipped",
           "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         },
@@ -89,8 +92,5 @@
         }
       ]
     }
-  ],
-  "category": [
-    "Basic Tools"
   ]
 }
