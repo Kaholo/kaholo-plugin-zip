@@ -1,6 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
-const { bootstrap } = require("kaholo-plugin-library");
+const { bootstrap } = require("@kaholo/plugin-library");
 const {
   pathExists,
   createZipArchive,
