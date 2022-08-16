@@ -7,8 +7,8 @@
     "lint:fix": "npx eslint . --fix"
   },
   "dependencies": {
+    "@kaholo/plugin-library": "^2.1.2",
     "archiver": "5.3.0",
-    "kaholo-plugin-library": "github:Kaholo/kaholo-plugin-library#v1.0.3",
     "node-stream-zip": "1.15.0",
     "path": "0.12.7"
   },
