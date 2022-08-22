@@ -45,7 +45,7 @@ async function unzip({
   await validatePaths(absoluteArchivePath);
 
   const destinationPathExists = await pathExists(absoluteDestinationPath);
-  if (!clearExtractionPath && destinationPathExists) {
+  if (!clearExtractionPath && destinationPathExists && destinationPath !== ".") {
     throw new Error(`Path ${destinationPath} exists. Please select the "Clear Extraction Path" parameter to overwrite.`);
   }
 
