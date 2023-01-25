@@ -5,7 +5,7 @@
   "execProgram": "node",
   "main": "app.js",
   "imgUrl": "logo.png",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Creates and Extracts Zip Archives",
   "category": [
     "Basic Tools"
@@ -81,7 +81,8 @@
           "description": "Path to directory into which the zip file will be extracted",
           "type": "string",
           "required": false,
-          "placeholder": "/home/username/unzipped",
+          "placeholder": "/usr/src/app/workspace",
+          "default": ".",
           "learnUrl": "https://github.com/Kaholo/kaholo-plugin-zip/blob/master/README.md"
         },
         {
